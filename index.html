@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checklist Digital do Padrinho de Posto — Delphos</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== PALETA: troque aqui para combinar com o Canva ===== */
+:root{
+  color-scheme:light;
+  --bg:#f5f3ee; --card:#fff; --ink:#14213d; --muted:#5d6678; --line:#e3dfd5;
+  --primary:#14213d; --accent:#ffb703;
+  --ok:#12805c; --ok-bg:#d9f2e8; --run:#2f5bd8; --run-bg:#dde6ff; --pend:#d9480f; --pend-bg:#ffe6d9;
+  --r:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 Poppins,system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px}
+.hero{background:var(--primary);color:#fff;padding:36px 16px 56px;border-radius:0 0 32px 32px}
+.hero .in{max-width:760px;margin:0 auto}
+.tag{display:inline-block;background:var(--accent);color:var(--ink);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:99px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.15;margin:14px 0 8px;font-weight:800}
+.hero p{margin:0;opacity:.85;max-width:560px}
+.bar{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;box-shadow:0 2px 10px #0001}
+.bar .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600}
+.track{flex:1;height:10px;background:var(--line);border-radius:9px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--ok);transition:width .3s}
+.pc{color:var(--pend)}
+.card{background:var(--card);border-radius:var(--r);padding:20px;margin-top:16px;box-shadow:0 1px 0 var(--line)}
+.aviso{margin-top:-30px;border-left:6px solid var(--accent)}
+h2{font-size:19px;margin:0 0 4px;font-weight:700}
+.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-weight:600;font-size:13px;margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+textarea{min-height:96px;resize:vertical}
+.etapa{display:flex;gap:12px;align-items:center;margin:28px 0 4px}
+.badge{flex:none;width:40px;height:40px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-weight:800}
+.etapa h2{margin:0}.etapa small{color:var(--muted)}
+.item{border-left:6px solid var(--line)}
+.item.s-demonstrado{border-color:var(--run)}.item.s-compreendido{border-color:var(--ok)}.item.s-pendente{border-color:var(--pend)}
+.num{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.05em}
+.item h3{font-size:16px;margin:2px 0 12px;font-weight:600}
+.seg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+@media(min-width:560px){.seg{grid-template-columns:repeat(4,1fr)}}
+.seg button{font:600 13px Poppins,sans-serif;padding:10px 6px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;min-height:44px}
+.seg button.on[data-st=a_iniciar]{background:var(--line);color:var(--ink);border-color:var(--muted)}
+.seg button.on[data-st=demonstrado]{background:var(--run-bg);color:var(--run);border-color:var(--run)}
+.seg button.on[data-st=compreendido]{background:var(--ok-bg);color:var(--ok);border-color:var(--ok)}
+.seg button.on[data-st=pendente]{background:var(--pend-bg);color:var(--pend);border-color:var(--pend)}
+.pend{display:none;margin-top:8px;border-color:var(--pend)}
+.s-pendente .pend{display:block}
+.ciencia{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1.5px solid var(--line);border-radius:12px;margin-top:10px;font-weight:500;font-size:14px}
+.ciencia input{width:22px;height:22px;flex:none;margin:0}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{font:700 15px Poppins,sans-serif;padding:14px 22px;border-radius:99px;border:2px solid var(--primary);background:var(--primary);color:#fff;cursor:pointer}
+.btn.sec{background:#fff;color:var(--primary)}
+.btn:disabled{opacity:.6}
+#msg{margin-top:14px;padding:12px 14px;border-radius:12px;font-weight:600;display:none}
+#msg.ok{display:block;background:var(--ok-bg);color:var(--ok)}
+#msg.err{display:block;background:var(--pend-bg);color:var(--pend)}
+footer{margin-top:28px;font-size:12px;color:var(--muted);text-align:center}
+@media print{.bar,.acoes,.hero p{display:none}body{background:#fff}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+  <span class="tag">Delphos · Programa Padrinho de Posto</span>
+  <h1>Checklist Digital do Padrinho de Posto</h1>
+  <p>Acolha, oriente na prática e acompanhe o novo colega, com transparência. Preencha aos poucos: tudo fica salvo neste aparelho.</p>
+</div></header>
+
+<div class="bar"><div class="in">
+  <span id="pTxt">0 / 20</span><div class="track"><div class="fill" id="pFill"></div></div><span class="pc" id="pPend"></span>
+</div></div>
+
+<main class="wrap">
+  <section class="card aviso">
+    <h2>Lembre-se</h2>
+    <p class="sub" style="margin:0">O padrinho acolhe, orienta e acompanha. <b>Não substitui o supervisor, o RH nem os treinamentos obrigatórios (NRs).</b> Só marque "Compreendido" o que foi praticado de fato. Pendências nunca devem ser ocultadas.</p>
+  </section>
+
+  <section class="card">
+    <h2>Identificação</h2><p class="sub">Posto, colaborador acolhido e responsáveis.</p>
+    <div class="grid" id="campos"></div>
+  </section>
+
+  <div id="etapas"></div>
+
+  <section class="card">
+    <h2>Encerramento e ciência</h2><p class="sub">Parecer geral e confirmações.</p>
+    <label for="obs">Parecer e observações do padrinho</label>
+    <textarea id="obs" data-r="obs" placeholder="Como o novo colega tem se adaptado? Como a equipe o recebeu?"></textarea>
+    <div style="margin-top:12px"><label for="prox">Data da próxima conversa</label><input type="date" id="prox" data-r="prox"></div>
+    <label class="ciencia"><input type="checkbox" data-c="p"><span>Padrinho: confirmo que as orientações foram demonstradas e os registros são fiéis.</span></label>
+    <label class="ciencia"><input type="checkbox" data-c="c"><span>Novo colaborador: confirmo que fui acolhido e pude tirar dúvidas.</span></label>
+    <label class="ciencia"><input type="checkbox" data-c="s"><span>Supervisão: ciente das pendências e do plano de acompanhamento.</span></label>
+    <div style="margin-top:14px"><label for="codigo">Código de envio (fornecido pelo RH)</label><input id="codigo" data-r="codigo" autocomplete="off"></div>
+    <div class="acoes">
+      <button class="btn" id="enviar">Enviar registro</button>
+      <button class="btn sec" onclick="window.print()">Imprimir / PDF</button>
+      <button class="btn sec" id="novo">Novo acompanhamento</button>
+    </div>
+    <div id="msg" role="status"></div>
+  </section>
+  <footer>Delphos — Segurança, Facilities e Tecnologia · Projeto Integrador de RH · Metodologia Peer-to-Peer</footer>
+</main>
+
+<script>
+/* Cole aqui a URL do Apps Script (termina em /exec) */
+const ENDPOINT='COLE_AQUI_A_URL_DO_APPS_SCRIPT';
+
+const ETAPAS=[
+{t:'Acolher',s:'Primeiro contato e pertencimento',i:['Apresentar-se e dar boas-vindas com postura acolhedora','Apresentar os colegas de turno e profissionais do posto','Apresentar áreas de apoio, vestiários, refeitório e postos','Explicar horários de turno, intervalos de refeição e rendição','Orientar sobre canais de contato e a quem recorrer']},
+{t:'Explicar e demonstrar',s:'Técnica e rotinas',i:['Explicar as responsabilidades e tarefas diárias da função','Indicar onde consultar normas, procedimentos e instruções oficiais','Reforçar conduta profissional, ética e sigilo de informações','Orientar sobre normas de segurança, sinalização preventiva e EPIs','Apresentar e demonstrar o manuseio correto dos equipamentos do posto','Confirmar que tarefas de risco exigem capacitação e autorização prévia']},
+{t:'Estar presente',s:'Acompanhamento ativo e escuta',i:['Reservar momento diário para ouvir dúvidas e dificuldades','Incentivar perguntas e desmistificar que ter dúvidas é fraqueza','Acompanhar a execução prática sem postura de teste ou prova','Conduzir a transferência prática (Eu Faço, Nós Fazemos, Você Faz, Nós Avaliamos)','Encaminhar ao supervisor/RH questões fora da competência do padrinho']},
+{t:'Ajudar a evoluir',s:'Feedback formativo e alinhamento',i:['Reconhecer avanços, pontualidade e atitudes positivas','Orientar com respeito sobre pontos que exigem maior atenção','Conferir itens do checklist sem mascarar pendências operacionais','Alinhar próximos passos e formalizar ciência com a supervisão']}
+];
+const ST=[['a_iniciar','A iniciar'],['demonstrado','Demonstrado'],['compreendido','Compreendido'],['pendente','Pendente']];
+const CAMPOS=[['nome','Novo colaborador'],['funcao','Função / cargo'],['posto','Posto / cliente'],['inicio','Data de início','date'],['padrinho','Padrinho responsável'],['sup','Supervisor do posto'],['backup','Padrinho substituto']];
+const SIT=['1º dia — acolhimento','Acompanhamento em curso','Aguardando resolução de pendência','Ciclo inicial concluído'];
+const KEY='padrinho-delphos-v1';
+const $=s=>document.querySelector(s);
+const ITENS=[];ETAPAS.forEach((e,a)=>e.i.forEach((t,b)=>ITENS.push({n:ITENS.length+1,cod:(a+1)+'.'+(b+1),t,a})));
+
+function novo(){return{id:(self.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2),f:{sit:SIT[1]},it:{},obs:'',prox:'',c:{},codigo:''}}
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+S=S||novo();
+const salvar=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const it=n=>S.it[n]||(S.it[n]={st:'a_iniciar',nota:'',pend:''});
+const rot=k=>(ST.find(x=>x[0]===k)||[,''])[1];
+
+function montar(){
+  $('#campos').innerHTML=CAMPOS.map(([k,l,t])=>`<div><label>${l}</label><input type="${t||'text'}" data-f="${k}"></div>`).join('')+
+    `<div><label>Situação atual</label><select data-f="sit">${SIT.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+  $('#etapas').innerHTML=ETAPAS.map((e,a)=>`<div class="etapa"><div class="badge">${a+1}</div><div><h2>${e.t}</h2><small>${e.s}</small></div></div>`+
+    ITENS.filter(x=>x.a===a).map(x=>`<article class="card item" id="i${x.n}"><div class="num">ITEM ${x.cod}</div><h3>${x.t}</h3>
+    <div class="seg">${ST.map(s=>`<button type="button" data-n="${x.n}" data-st="${s[0]}">${s[1]}</button>`).join('')}</div>
+    <input data-n="${x.n}" data-k="nota" placeholder="Anotação prática (opcional)">
+    <input class="pend" data-n="${x.n}" data-k="pend" placeholder="Motivo da pendência e ação com a supervisão"></article>`).join('')).join('');
+  document.querySelectorAll('[data-f]').forEach(e=>e.value=S.f[e.dataset.f]||'');
+  document.querySelectorAll('[data-n][data-k]').forEach(e=>e.value=it(e.dataset.n)[e.dataset.k]||'');
+  document.querySelectorAll('[data-r]').forEach(e=>e.value=S[e.dataset.r]||'');
+  document.querySelectorAll('[data-c]').forEach(e=>e.checked=!!S.c[e.dataset.c]);
+  pintar();
+}
+function pintar(){
+  let ok=0,pe=0;
+  ITENS.forEach(x=>{const st=it(x.n).st;if(st==='compreendido')ok++;if(st==='pendente')pe++;
+    const el=$('#i'+x.n);el.className='card item s-'+st;
+    el.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.st===st));});
+  $('#pTxt').textContent=ok+' / '+ITENS.length;
+  $('#pFill').style.width=(ok/ITENS.length*100)+'%';
+  $('#pPend').textContent=pe?pe+(pe>1?' pendências':' pendência'):'';
+}
+document.addEventListener('click',e=>{const b=e.target.closest('.seg button');if(!b)return;it(b.dataset.n).st=b.dataset.st;salvar();pintar()});
+['input','change'].forEach(ev=>document.addEventListener(ev,e=>{const d=e.target.dataset;
+  if(d.f)S.f[d.f]=e.target.value;
+  else if(d.n&&d.k)it(d.n)[d.k]=e.target.value;
+  else if(d.r)S[d.r]=e.target.value;
+  else if(d.c)S.c[d.c]=e.target.checked;
+  else return;salvar()}));
+
+function aviso(t,ok){const m=$('#msg');m.textContent=t;m.className=ok?'ok':'err'}
+$('#enviar').onclick=async()=>{
+  if(!S.f.nome||!S.f.padrinho)return aviso('Preencha ao menos o nome do colaborador e do padrinho.');
+  if(!S.codigo)return aviso('Informe o código de envio fornecido pelo RH.');
+  if(ENDPOINT.startsWith('COLE'))return aviso('Envio ainda não configurado: falta a URL do Apps Script.');
+  const comp=ITENS.filter(x=>it(x.n).st==='compreendido').length;
+  const pend=ITENS.filter(x=>it(x.n).st==='pendente');
+  const nota=ITENS.filter(x=>it(x.n).nota);
+  const cab=['Atualizado em','ID','Colaborador','Função','Posto','Início','Padrinho','Supervisor','Padrinho substituto','Situação','Compreendidos','% compreendido','Nº pendências',
+    ...ITENS.map(x=>'Item '+x.cod),'Pendências','Anotações','Parecer','Próxima conversa','Ciência padrinho','Ciência colaborador','Ciência supervisão'];
+  const linha=[new Date().toLocaleString('pt-BR'),S.id,...CAMPOS.map(c=>S.f[c[0]]||''),S.f.sit||'',comp,Math.round(comp/ITENS.length*100)+'%',pend.length,
+    ...ITENS.map(x=>rot(it(x.n).st)),
+    pend.map(x=>'Item '+x.cod+': '+(it(x.n).pend||'sem justificativa')).join(' | '),
+    nota.map(x=>'Item '+x.cod+': '+it(x.n).nota).join(' | '),
+    S.obs,S.prox,...['p','c','s'].map(k=>S.c[k]?'Sim':'Não')];
+  const b=$('#enviar');b.disabled=true;b.textContent='Enviando…';
+  try{
+    const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({codigo:S.codigo,id:S.id,cabecalho:cab,linha})});
+    const j=await r.json();
+    j.ok?aviso('✓ Registro enviado! Você pode continuar preenchendo e enviar de novo: o mesmo registro é atualizado.',1):aviso('Código de envio incorreto.');
+  }catch(err){aviso('Não foi possível enviar. Seus dados continuam salvos neste aparelho; tente de novo com internet.')}
+  b.disabled=false;b.textContent='Enviar registro';
+};
+$('#novo').onclick=()=>{if(confirm('Iniciar um novo acompanhamento? Os dados deste aparelho serão limpos (o que já foi enviado fica na planilha).')){const c=S.codigo;S=novo();S.codigo=c;salvar();montar();$('#msg').className='';scrollTo(0,0)}};
+montar();
+</script>
+</body>
+</html>
